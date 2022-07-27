@@ -4,7 +4,7 @@ policy:
   pullRequests: public  # It can be restricted to known collaborators, for instance.
 tasks:
   - taskQueueId: built-in/succeed
-    schedulerId: taskcluster-ui
+    schedulerId: taskcluster-github
     created: '2022-07-27T14:18:02.603Z'
     deadline: '2022-07-27T17:18:02.603Z'
     payload: {}
