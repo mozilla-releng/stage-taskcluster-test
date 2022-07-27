@@ -5,8 +5,7 @@ policy:
 tasks:
   - taskQueueId: built-in/succeed
     schedulerId: taskcluster-github
-    created: '2022-07-27T14:18:02.603Z'
-    deadline: '2022-07-27T17:18:02.603Z'
+    deadline: {$fromNow: '2 hours'}
     payload: {}
     metadata:
       name: example-task
