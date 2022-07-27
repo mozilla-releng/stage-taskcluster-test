@@ -3,65 +3,13 @@ reporting: checks-v1    # Reports results as "GitHub Checks"
 policy:
   pullRequests: public  # It can be restricted to known collaborators, for instance.
 tasks:
-    $let:
-        # We're going to reuse this value several times, so we store it in a variable
-        buildTaskId: {$eval: as_slugid("build_task")}
-    in:
-        - provisionerId: proj-misc     # Uses Taskcluster's default instance
-          # The tutorial tutorial is supplied by the provisioner defined above.
-          # It loads any docker images.
-          workerType: tutorial
-          # We explicitly set the taskId so the test task knows what to wait on
-          taskId: ${buildTaskId}
-          # After this deadline, the task will be considered as in exception, no matter
-          # if it ever started or not.
-          deadline: {$fromNow: '2 hours'}
-          payload:
-            # This image is taken directly from Docker hub
-            image: 'ubuntu:latest'
-            command:
-              - /bin/bash
-              - '-cx'
-              # For the sake of having a simple task, we just output this simple file
-              - >-
-                mkdir /output &&
-                echo "$(date): Dummy build output" > /output/build.txt
-            artifacts:
-              # This file will exposed as `public/build.txt` for 1 year. Then, it will
-              # be automatically deleted. This way, storage doesn't cost too much.
-              public:
-                type: directory
-                path: /output
-                expires: {$fromNow: '1 year'}
-            # If the task takes more than 10 minutes to run, after it started, it will
-            # be cancelled.
-            maxRunTime: 600
-          metadata:
-            # This metadata is shown on GitHub as well as on the WebUI
-            name: Example Build Task
-            description: This task builds an artifact and exposes it
-            owner: ${event.pusher.name}@users.noreply.github.com
-            source: ${event.repository.url}
-        - dependencies:
-            - ${buildTaskId}    # This task will only start if the build task succeeded
-          provisionerId: proj-misc
-          workerType: tutorial
-          deadline: {$fromNow: '2 hours'}
-          payload:
-            image: 'ubuntu:latest'
-            command:
-              - /bin/bash
-              - '-cx'
-              # For the sake of having a simple example, we install dependencies here. We could
-              # make our own Docker image once reuse it in all later coming tasks.
-              # This task just outputs the content of the build tasks to the logs
-              - >-
-                apt-get update &&
-                apt-get install --yes curl &&
-                curl --location https://queue.taskcluster.net/v1/task/${buildTaskId}/artifacts/public/build.txt
-            maxRunTime: 600
-          metadata:
-            name: Example Test Task
-            description: This task fetches the build artifact and outputs it in the logs
-            owner: ${event.pusher.name}@users.noreply.github.com
-            source: ${event.repository.url}
+  - taskQueueId: built-in/succeed
+    schedulerId: taskcluster-ui
+    created: '2022-07-27T14:18:02.603Z'
+    deadline: '2022-07-27T17:18:02.603Z'
+    payload: {}
+    metadata:
+      name: example-task
+      description: An **example** task
+      owner: ahal@mozilla.com
+      source: http://taskcluster/tasks/create
