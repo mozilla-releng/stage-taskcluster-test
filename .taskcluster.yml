@@ -3,7 +3,7 @@ reporting: checks-v1    # Reports results as "GitHub Checks"
 policy:
   pullRequests: public_restricted
 tasks:
-  - $if: 'tasks_for == "github-pull-request"'
+  - $if: 'tasks_for == "github-pull-request-untrusted"'
     then:
       taskQueueId: built-in/succeed
       schedulerId: taskcluster-github
