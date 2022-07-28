@@ -1,4 +1,3 @@
-# tc-github-test
-Repo to test taskcluster-github integration
+# Hello Taskcluster
 
-Push test
+Repo to test taskcluster-github integration
