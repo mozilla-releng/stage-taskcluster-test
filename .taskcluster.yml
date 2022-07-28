@@ -3,12 +3,24 @@ reporting: checks-v1    # Reports results as "GitHub Checks"
 policy:
   pullRequests: public_restricted
 tasks:
-  - taskQueueId: built-in/succeed
-    schedulerId: taskcluster-github
-    deadline: {$fromNow: '2 hours'}
-    payload: {}
-    metadata:
-      name: example-task
-      description: An **example** task
-      owner: ahal@mozilla.com
-      source: http://taskcluster/tasks/create
+  - $if: 'tasks_for == "github-pull-request"'
+    then:
+      taskQueueId: built-in/succeed
+      schedulerId: taskcluster-github
+      deadline: {$fromNow: '2 hours'}
+      payload: {}
+      metadata:
+        name: example-task
+        description: An **example** task
+        owner: ahal@mozilla.com
+        source: http://taskcluster/tasks/create
+    else:
+      taskQueueId: built-in/fail
+      schedulerId: taskcluster-github
+      deadline: {$fromNow: '2 hours'}
+      payload: {}
+      metadata:
+        name: example-task
+        description: An **example** task
+        owner: ahal@mozilla.com
+        source: http://taskcluster/tasks/create
