@@ -1,7 +1,7 @@
 version: 1
 reporting: checks-v1    # Reports results as "GitHub Checks"
 policy:
-  pullRequests: public  # It can be restricted to known collaborators, for instance.
+  pullRequests: public_restricted
 tasks:
   - taskQueueId: built-in/succeed
     schedulerId: taskcluster-github
