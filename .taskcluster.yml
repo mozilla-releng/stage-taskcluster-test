@@ -16,6 +16,7 @@ tasks:
         source: http://taskcluster/tasks/create
     else:
       $if: 'tasks_for == "github-pull-request"'
+      then:
         taskQueueId: built-in/fail
         schedulerId: taskcluster-github
         deadline: {$fromNow: '2 hours'}
