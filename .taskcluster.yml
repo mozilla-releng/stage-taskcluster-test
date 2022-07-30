@@ -15,12 +15,13 @@ tasks:
         owner: ahal@mozilla.com
         source: http://taskcluster/tasks/create
     else:
-      taskQueueId: built-in/fail
-      schedulerId: taskcluster-github
-      deadline: {$fromNow: '2 hours'}
-      payload: {}
-      metadata:
-        name: example-task
-        description: An **example** task
-        owner: ahal@mozilla.com
-        source: http://taskcluster/tasks/create
+      $if: 'tasks_for == "github-pull-request"'
+        taskQueueId: built-in/fail
+        schedulerId: taskcluster-github
+        deadline: {$fromNow: '2 hours'}
+        payload: {}
+        metadata:
+          name: example-task
+          description: An **example** task
+          owner: ahal@mozilla.com
+          source: http://taskcluster/tasks/create
