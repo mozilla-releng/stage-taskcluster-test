@@ -1,3 +1,3 @@
 # Hello Taskcluster
 
-Repo to test taskcluster-github integration
+Repo to test taskcluster-github integration.
