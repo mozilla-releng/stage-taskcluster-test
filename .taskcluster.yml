@@ -7,8 +7,8 @@ tasks:
     then:
       taskQueueId: docker-compose/generic-worker
       schedulerId: taskcluster-ui
-      created: '2022-07-27T13:53:21.190Z'
-      deadline: '2022-07-27T16:53:21.190Z'
+      created: {$fromNow: ''}
+      deadline: {$fromNow: '1 day'}
       payload:
         command:
           - - /bin/bash
@@ -25,8 +25,8 @@ tasks:
       then:
         taskQueueId: docker-compose/generic-worker
         schedulerId: taskcluster-ui
-        created: '2022-07-27T13:53:21.190Z'
-        deadline: '2022-07-27T16:53:21.190Z'
+        created: {$fromNow: ''}
+        deadline: {$fromNow: '1 day'}
         payload:
           command:
             - - /bin/bash
